@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metafly Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="logo.png" alt="Metafly">
+            </div>
+            <h1>Hola,<br>Jean Villalobos!</h1>
+        </header>
+
+        <section class="main-balance">
+            <div class="balance-info">
+                <div class="balance-item">
+                    <p>Balance Neto $.</p>
+                    <h2 class="balance-dolar">$100.00</h2>
+                </div>
+                <div class="balance-item">
+                    <p>Balance Neto Bs.</p>
+                    <h2 class="balance-bolivar">Bs 0,00</h2>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </section>
+
+        <section class="summary-grid">
+            <div class="card">
+                <div class="card-content">
+                    <p>Ingresos</p>
+                    <h3 class="income-text">$820,00</h3>
+                </div>
+                <div class="indicator green"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <p>Gastos</p>
+                    <h3 class="expense-text">$350,00</h3>
+                </div>
+                <div class="indicator red"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <p>Tasa del día - Bs/$</p>
+                    <h3 id="rate-value" class="rate-text">Cargando...</h3>
+                </div>
+            </div>
+        </section>
+
+        <section class="transactions-section">
+            <h2 class="section-title">Transacciones</h2>
+            <div class="transaction-list">
+                <!-- Se insertarán dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Modal Único -->
+        <div id="modal-transaccion" class="modal">
+            <div class="modal-content">
+                <h3 id="modal-titulo">Nueva Transacción</h3>
+                <form id="form-transaccion">
+                    <div class="input-group">
+                        <label>Monto ($)</label>
+                        <input type="number" id="monto" step="0.01" placeholder="0.00" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Categoría</label>
+                        <select id="categoria" required>
+                            <option value="Trabajo">💼 Trabajo</option>
+                            <option value="Comida">🛒 Comida</option>
+                            <option value="Entretenimiento">🎮 Entretenimiento</option>
+                            <option value="Salud">🏥 Salud</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Tipo</label>
+                        <select id="tipo">
+                            <option value="ingreso">Ingreso (+)</option>
+                            <option value="gasto">Gasto (-)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group-row">
+                        <div class="input-group">
+                            <label>Fecha</label>
+                            <input type="date" id="fecha-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Hora</label>
+                            <input type="time" id="hora-input" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" id="btn-cancelar" class="btn-secundario">Cancelar</button>
+                        <button type="submit" class="btn-primario">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- CONFIGURACIÓN INICIAL ---
+    const balanceDolarBase = 100.00;
+    let tasaActual = 1.00;
+    let tarjetaEnEdicion = null; // Para saber si estamos editando
+
+    const rateElement = document.getElementById('rate-value');
+    const balanceBsElement = document.querySelector('.balance-bolivar');
+    const btnAdd = document.querySelector('.add-btn');
+    const modal = document.getElementById('modal-transaccion');
+    const btnCancelar = document.getElementById('btn-cancelar');
+    const form = document.getElementById('form-transaccion');
+    const listaTransacciones = document.querySelector('.transaction-list');
+
+    const iconos = {
+        "Trabajo": "💼",
+        "Comida": "🛒",
+        "Entretenimiento": "🎮",
+        "Salud": "🏥"
+    };
+
+    async function actualizarTasa() {
+        const rateElement = document.getElementById('rate-value');
+        const balanceBsElement = document.querySelector('.balance-bolivar');
+
+        try {
+            // Agregamos un parámetro aleatorio al final de la URL (?t=timestamp)
+            // Esto engaña al navegador y lo obliga a pedir la tasa nueva al servidor.
+            const response = await fetch('https://ve.dolarapi.com/v1/dolares/bcv?t=' + Date.now(), {
+                cache: "no-store" // Instrucción adicional para no guardar caché
+            });
+
+            if (!response.ok) throw new Error('Error en API');
+            
+            const data = await response.json();
+            tasaActual = data.promedio || data.venta;
+
+            // Formateo con estándares locales (punto para miles, coma para decimales)
+            rateElement.innerText = tasaActual.toLocaleString('es-VE', { 
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            });
+
+            const totalBs = balanceDolarBase * tasaActual;
+            balanceBsElement.innerText = "Bs " + totalBs.toLocaleString('es-VE', { 
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            });
+            
+        } catch (error) {
+            console.error("Fallo al conectar con la API:", error);
+            // Si falla internet, usamos el último valor conocido o un promedio estable
+            const tasaRespaldo = 504.91; 
+            rateElement.innerText = tasaRespaldo.toLocaleString('es-VE', { minimumFractionDigits: 2 });
+            balanceBsElement.innerText = "Bs " + (balanceDolarBase * tasaRespaldo).toLocaleString('es-VE', { minimumFractionDigits: 2 });
+        }
+    }
+
+    // --- 2. GESTIÓN DEL MODAL ---
+    btnAdd.onclick = () => {
+        tarjetaEnEdicion = null;
+        form.reset();
+        document.getElementById('modal-titulo').innerText = "Nueva Transacción";
+        
+        // Pre-llenar fecha y hora actual
+        const ahora = new Date();
+        document.getElementById('fecha-input').value = ahora.toISOString().split('T')[0];
+        document.getElementById('hora-input').value = ahora.toTimeString().slice(0, 5);
+        
+        modal.style.display = 'flex';
+    };
+
+    btnCancelar.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    // --- 3. GUARDAR TRANSACCIÓN (NUEVA O EDITADA) ---
+    form.onsubmit = (e) => {
+        e.preventDefault();
+
+        const monto = document.getElementById('monto').value;
+        const categoria = document.getElementById('categoria').value;
+        const tipo = document.getElementById('tipo').value;
+        const fechaIn = document.getElementById('fecha-input').value;
+        const horaIn = document.getElementById('hora-input').value;
+
+        // Formatear fecha y hora para la vista
+        const f = new Date(fechaIn + 'T00:00:00');
+        const fechaStr = f.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+        const [h, m] = horaIn.split(':');
+        const h12 = ((h % 12) || 12) + ':' + m + (h >= 12 ? ' PM' : ' AM');
+
+        const esIngreso = tipo === 'ingreso';
+
+        const contenidoCard = `
+            <div class="t-left">
+                <div class="icon-arrow ${esIngreso ? 'up' : 'down'}">${esIngreso ? '↑' : '↓'}</div>
+                <div class="icon-category">${iconos[categoria] || '💰'}</div>
+            </div>
+            <div class="t-info">
+                <span class="t-name">${categoria}</span>
+                <span class="t-date">${fechaStr}, ${h12}</span>
+            </div>
+            <div class="t-amount ${esIngreso ? 'income' : 'expense'}">
+                ${esIngreso ? '+' : '-'}$${parseFloat(monto).toFixed(2)}
+            </div>
+            <div class="t-actions">
+                <span class="action-icon btn-delete">🗑️</span>
+                <span class="action-icon btn-edit">📝</span>
+            </div>
+        `;
+
+        if (tarjetaEnEdicion) {
+            // Actualizar la tarjeta existente
+            tarjetaEnEdicion.innerHTML = contenidoCard;
+        } else {
+            // Crear nueva tarjeta
+            const nuevaCard = document.createElement('div');
+            nuevaCard.className = 'transaction-card';
+            nuevaCard.innerHTML = contenidoCard;
+            listaTransacciones.insertAdjacentElement('afterbegin', nuevaCard);
+        }
+
+        modal.style.display = 'none';
+        vincularEventos(); // Re-vincular eventos a los nuevos botones
+    };
+
+    // --- 4. EVENTOS DE EDITAR Y BORRAR ---
+    function vincularEventos() {
+        // Borrar
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.onclick = (e) => {
+                if(confirm("¿Eliminar esta transacción?")) {
+                    e.target.closest('.transaction-card').remove();
+                }
+            };
+        });
+
+        // Editar
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.onclick = (e) => {
+                tarjetaEnEdicion = e.target.closest('.transaction-card');
+                
+                // Extraer datos de la tarjeta para el formulario
+                const montoActual = tarjetaEnEdicion.querySelector('.t-amount').innerText.replace(/[+$ -]/g, '');
+                const catActual = tarjetaEnEdicion.querySelector('.t-name').innerText;
+                const esIngreso = tarjetaEnEdicion.querySelector('.t-amount').classList.contains('income');
+
+                document.getElementById('monto').value = montoActual;
+                document.getElementById('categoria').value = catActual;
+                document.getElementById('tipo').value = esIngreso ? 'ingreso' : 'gasto';
+                document.getElementById('modal-titulo').innerText = "Editar Transacción";
+                
+                modal.style.display = 'flex';
+            };
+        });
+    }
+
+    // Inicializar
+    actualizarTasa();
+</script>
+</body>
+</html>

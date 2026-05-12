@@ -1,0 +1,337 @@
+/* Registro de la fuente local */
+@font-face {
+    font-family: 'BoruinoFont';
+    src: url('BORUINO.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Aplicación global o a elementos específicos */
+body {
+    font-family: 'BoruinoFont', Arial, sans-serif;
+}
+
+h1, h2, .balance-dolar, .balance-bolivar {
+    font-family: 'BoruinoFont', sans-serif;
+    font-weight: 100;
+}
+
+:root {
+    --primary-purple: #9d8df1;
+    --dark-blue: #1a233a;
+    --light-bg: #f4f4f4;
+    --white: #ffffff;
+    --green: #9ddb56;
+    --red: #d85656;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--white);
+    color: var(--dark-blue);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; /* Ajustado para vista móvil como la imagen */
+    padding: 20px;
+}
+
+/* Header */
+.header .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.header .logo img {
+    width: 80px;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin: 10px 0;
+    line-height: 1.1;
+}
+
+/* Main Balance Card */
+.main-balance {
+    background: linear-gradient(135deg, #6647ed, #b0a8fb);
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.balance-info {
+    display: flex;
+    gap: 20px;
+}
+
+.balance-item p {
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.balance-dolar {
+    font-size: 3rem;
+    margin: 5px 0 0 0;
+    /* background: linear-gradient(135deg, #b0a8fb, #6647ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; */
+}
+
+.balance-bolivar {
+    font-size: 2.2rem;
+    margin: 12px 0 0 0;
+    /* background: linear-gradient(135deg, #b0a8fb, #6647ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; */
+}
+
+.add-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: var(--primary-purple);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.card {
+    background-color: var(--light-bg);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+}
+
+.card p {
+    font-size: 0.7rem;
+    margin: 0;
+    color: #666;
+}
+
+.card h3 {
+    margin: 5px 0 0 0;
+    font-size: 2rem;
+    font-weight: 100;
+    background: linear-gradient(135deg, #b0a8fb, #6647ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.income-text, .expense-text, .rate-text {
+    font-family: 'BoruinoFont';
+}
+
+.indicator {
+    width: 7px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.rate-text {
+    white-space: nowrap; /* Evita que el número se parta en dos líneas */
+}
+
+/* Transacciones */
+.transactions-section {
+    margin-top: 30px;
+}
+
+.section-title {
+    font-size: 1.7rem;
+    color: var(--dark-blue);
+    margin-bottom: 15px;
+    /* letter-spacing: 1px; */
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-card {
+    background: white;
+    padding: 15px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Sombra suave para dar profundidad */
+}
+
+.t-left {
+    display: flex;
+    gap: 10px;
+    margin-right: 15px;
+}
+
+.icon-arrow {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background: #f8f9fa;
+}
+
+.icon-arrow.up { color: #a2d94c; background: #f4faeb; }
+.icon-arrow.down { color: #d9534f; background: #fdf2f2; }
+
+.icon-category {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.t-info {
+    flex-grow: 1; /* Esto empuja el monto a la derecha */
+    display: flex;
+    flex-direction: column;
+}
+
+.t-name {
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--dark-blue);
+    font-family: 'Segoe UI', sans-serif; /* Si usas una fuente condensada */
+}
+
+.t-date {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.t-amount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-right: 15px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.t-amount.income { color: #a2d94c; }
+.t-amount.expense { color: #d9534f; }
+
+.t-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-left: 1px solid #eee;
+    padding-left: 10px;
+}
+
+.action-icon {
+    cursor: pointer;
+    font-size: 1rem;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.action-icon:hover {
+    opacity: 1;
+    filter: grayscale(0);
+}
+
+.green { background-color: var(--green); }
+.red { background-color: var(--red); }
+
+/* Estilos del Modal */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 100;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 350px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input, .input-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-primario, .btn-secundario {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.input-group-row {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group-row .input-group {
+    flex: 1;
+}
+
+.btn-primario { background: linear-gradient(135deg, #b0a8fb, #6647ed);; color: white; }
+.btn-secundario { background: #eee; }
