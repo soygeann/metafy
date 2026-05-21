@@ -320,10 +320,22 @@ body {
     margin: 0 auto 20px auto;
 }
 
+.header-activity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.icon-arrow-right {
+    width: 26px;
+    height: 23px;
+}
+
 .sheet-title {
     color: #171c26;
     font-size: 18pt;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     /* text-transform: uppercase; */
     letter-spacing: 0.02em;
 }
@@ -733,3 +745,4 @@ body {
 .t-ui-btn:hover {
     opacity: 1;
 }
+
