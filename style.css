@@ -11,327 +11,724 @@ body {
     font-family: 'BoruinoFont', Arial, sans-serif;
 }
 
-h1, h2, .balance-dolar, .balance-bolivar {
+h1, h2, .balance-dolar, .balance-bolivar, .welcome-text {
     font-family: 'BoruinoFont', sans-serif;
     font-weight: 100;
 }
 
+/* --- 2. VARIABLES DE PALETA DE COLORES --- */
 :root {
-    --primary-purple: #9d8df1;
-    --dark-blue: #1a233a;
-    --light-bg: #f4f4f4;
-    --white: #ffffff;
-    --green: #9ddb56;
-    --red: #d85656;
+    --bg-dark: #000000;
+    --purple-grad: linear-gradient(135deg, #b0a8fb 0%, #6647ed 100%);
+    --purple-solid: #6647ed;
+    --card-dark: #22252a;
+    --sheet-bg: #e1e4e6;
+    --text-light: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --green-ui: #4cd964;
+    --red-ui: #ff3b30;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--white);
-    color: var(--dark-blue);
-    margin: 0;
-    display: flex;
-    justify-content: center;
+    font-family: 'Boruino', 'Arial Condensed', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    display: block;
+    min-height: 100vh;
 }
 
-.container {
+/* Contenedor Mockup Móvil */
+.phone-container {
     width: 100%;
-    max-width: 400px; /* Ajustado para vista móvil como la imagen */
-    padding: 20px;
+    max-width: 412px;
+    margin: 0 auto;
+    position: relative;
+    background-color: var(--bg-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 20px;
 }
 
-/* Header */
-.header .logo {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
+/* --- 3. CABECERA MORADA DEGRADADA --- */
+.hero-header {
+    background: var(--purple-grad);
+    /* border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px; */
+    border-radius: 32px;
+    padding: 25px 30px 35px 30px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.header-top {
+    display: table;
+    width: 100%;
     margin-bottom: 20px;
-    justify-content: center;
+    margin-top: 40px;
 }
 
-.header .logo img {
-    width: 80px;
-}
-
-.header h1 {
-    font-size: 3rem;
-    margin: 10px 0;
+.welcome-text {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 30px;
     line-height: 1.1;
+    /* text-transform: uppercase; */
+    font-family: 'BoruinoFont';
+    letter-spacing: 0.01em;
 }
 
-/* Main Balance Card */
-.main-balance {
-    background: linear-gradient(135deg, #6647ed, #b0a8fb);
-    border-radius: 20px;
-    padding: 20px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.menu-btn-container {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+    width: 50px;
 }
 
-.balance-info {
-    display: flex;
-    gap: 20px;
-}
-
-.balance-item p {
-    font-size: 0.8rem;
-    margin: 0;
-    opacity: 0.9;
-}
-
-.balance-dolar {
-    font-size: 3rem;
-    margin: 5px 0 0 0;
-    /* background: linear-gradient(135deg, #b0a8fb, #6647ed);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; */
-}
-
-.balance-bolivar {
-    font-size: 2.2rem;
-    margin: 12px 0 0 0;
-    /* background: linear-gradient(135deg, #b0a8fb, #6647ed);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; */
-}
-
-.add-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.menu-btn {
+    background-color: var(--text-light);
+    color: var(--purple-solid);
     border: none;
-    background: white;
-    color: var(--primary-purple);
-    font-size: 1.5rem;
-    font-weight: bold;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 14pt;
+    cursor: pointer;
+    text-align: center;
+    line-height: 36px;
+}
+
+/* Switch de modo visual */
+.toggle-container {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 900;
+}
+
+.toggle-switch {
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid var(--text-light);
+    width: 55px;
+    height: 25px;
+    border-radius: 9px;
+    position: relative;
     cursor: pointer;
 }
 
-/* Summary Grid */
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+.toggle-circle {
+    background-color: #000000;
+    width: 17px;
+    height: 17px;
+    border-radius: 30%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    color: #ffffff;
+    font-size: 10pt;
 }
 
-.card {
-    background-color: var(--light-bg);
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 60px;
+.toggle-text {
+    font-size: 7pt;
+    margin-left: 14px;
+    font-family: sans-serif;
+    color: #777C84;
 }
 
-.card p {
-    font-size: 0.7rem;
-    margin: 0;
-    color: #666;
+/* Balance Central */
+.main-balance-box {
+    text-align: center;
+    margin-top: 10px;
 }
 
-.card h3 {
-    margin: 5px 0 0 0;
-    font-size: 2rem;
-    font-weight: 100;
-    background: linear-gradient(135deg, #b0a8fb, #6647ed);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.amount-large {
+    font-size: 55pt;
+    line-height: 1;
+    margin-bottom: 2px;
 }
 
-.income-text, .expense-text, .rate-text {
-    font-family: 'BoruinoFont';
+.amount-large span {
+    font-size: 24pt;
+    vertical-align: middle;
+    opacity: 0.8;
 }
 
-.indicator {
-    width: 7px;
-    height: 60px;
-    border-radius: 10px;
+.balance-label {
+    font-size: 10pt;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: sans-serif;
 }
 
-.rate-text {
-    white-space: nowrap; /* Evita que el número se parta en dos líneas */
+/* --- 4. CÁPSULAS FLOTANTES --- */
+.floating-action-bar {
+    text-align: center;
+    margin-top: -24px;
+    position: relative;
+    z-index: 10;
+    padding: 0 16px;
 }
 
-/* Transacciones */
-.transactions-section {
-    margin-top: 30px;
+.capsule-btn {
+    display: inline-block;
+    background-color: #6647ed;
+    border: 4px solid #000000;
+    color: var(--text-light);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13pt;
+    cursor: pointer;
+    margin: 0 4px;
 }
 
-.section-title {
-    font-size: 1.7rem;
-    color: var(--dark-blue);
-    margin-bottom: 15px;
-    /* letter-spacing: 1px; */
+.capsule-btn span {
+    font-size: 10pt;
+    vertical-align: middle;
+    opacity: 0.8;
 }
 
-.transaction-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.capsule-btn.btn-tasa {
+    display: inline-block;
+    background-color: #dce0e2;
+    border: 4px solid #000000;
+    color: #000000;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13pt;
+    cursor: pointer;
+    margin: 0 4px;
 }
 
-.transaction-card {
-    background: white;
-    padding: 15px;
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Sombra suave para dar profundidad */
+/* --- 5. GRID DE FILAS (INGRESOS / GASTOS / +) --- */
+.quick-stats-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    padding: 16px 30px;
+    margin-top: -2px;
+    margin-bottom: -10px;
 }
 
-.t-left {
-    display: flex;
-    gap: 10px;
-    margin-right: 15px;
+.stat-col {
+    display: table-cell;
+    vertical-align: middle;
 }
 
-.icon-arrow {
-    width: 35px;
-    height: 35px;
+.stat-card-mini {
+    background-color: var(--card-dark);
+    border-radius: 14px;
+    padding: 8px;
+    text-align: center;
+}
+
+.stat-card-mini h2 {
+    font-size: 20pt;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stat-card-mini span .smaller {
+    font-size: 15pt;
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 0.8;
+}
+
+.stat-card-mini span {
+    font-size: 20pt;
+    letter-spacing: 0.02em;
+}
+
+.smaller {
+    font-size: 12pt;
+}
+
+.stat-card-mini .icon-circle {
+    width: 24px;
+    height: 24px;
+    /* border: 1px solid #ffffff; */
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    background: #f8f9fa;
+    display: inline-block;
+    font-size: 11pt;
+    /* line-height: 22px; */
+    margin-left: 10px;
+    color: var(--text-muted);
+    vertical-align: middle;
 }
 
-.icon-arrow.up { color: #a2d94c; background: #f4faeb; }
-.icon-arrow.down { color: #d9534f; background: #fdf2f2; }
+.icon-circle-down {
+    width: 24px;
+    height: 24px;
+    /* border: 1px solid #ffffff; */
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 11pt;
+    /* line-height: 22px; */
+    margin-left: 10px;
+    color: var(--text-muted);
+    vertical-align: middle;
+    transform: rotate(180deg);
+}
+
+.center-btn-col {
+    display: table-cell;
+    width: 65px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.add-action-btn {
+    background-color: var(--purple-solid);
+    color: var(--text-light);
+    border: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 22pt;
+    cursor: pointer;
+    line-height: 42px;
+}
+
+/* --- 6. CONTENEDOR GRIS INFERIOR (BOTTOM SHEET) --- */
+.bottom-sheet {
+    background-color: var(--sheet-bg);
+    border-radius: 36px;
+    /* border-top-left-radius: 36px;
+    border-top-right-radius: 36px; */
+    
+
+    /* min-height: calc(100vh - 280px); */
+    
+    margin-top: 15px;
+    padding: 12px 30px 40px 30px; /* Añadí 40px abajo de padding para que las transacciones no peguen del borde final */
+    position: relative;
+}
+
+.drag-handle {
+    width: 36px;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    margin: 0 auto 20px auto;
+}
+
+.sheet-title {
+    color: #171c26;
+    font-size: 18pt;
+    margin-bottom: 10px;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.02em;
+}
+
+/* --- CARDS DE TRANSACCIONES --- */
+.transaction-card {
+    background-color: var(--text-light);
+    border-radius: 15px;
+    padding: 5px 20px;
+    margin-bottom: 12px;
+    display: table;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.t-col {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.t-col-arrow { width: 44px; }
+.t-col-icon { width: 44px; }
+.t-col-amount { text-align: right; font-size: 16pt; }
+.t-col-actions { width: 40px; text-align: right; }
+
+.income-color, .expense-color { color: black; }
+
+.t-col-amount {
+    letter-spacing: 0.02em;
+    font-weight: 100;
+}
+
+.round-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    text-align: center;
+    line-height: 36px;
+    font-size: 14pt;
+}
 
 .icon-category {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: #f0f2f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    width: 23px;
+    height: 36px;
+    /* background-color: #f0f2f5; */
+    text-align: center;
+    line-height: 36px;
+    font-size: 14pt;
 }
 
-.t-info {
-    flex-grow: 1; /* Esto empuja el monto a la derecha */
-    display: flex;
-    flex-direction: column;
+.icon-category-bg {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e77f08;
+    text-align: center;
+    line-height: 36px;
+    font-size: 14pt;
 }
+
+.round-icon.up { color: var(--green-ui); font-weight: bold; }
+.round-icon.down { color: var(--red-ui); font-weight: bold; }
+
+.t-details { padding-left: 8px; }
 
 .t-name {
-    font-weight: 900;
-    font-size: 1.1rem;
-    color: var(--dark-blue);
-    font-family: 'Segoe UI', sans-serif; /* Si usas una fuente condensada */
+    display: block;
+    font-size: 15pt;
+    color: #171c26;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
 }
 
 .t-date {
-    font-size: 0.75rem;
-    color: #888;
+    font-size: 10pt;
+    color: #7f8c8d;
+    font-family: Arial, sans-serif;
 }
 
-.t-amount {
-    font-size: 1.5rem;
-    font-weight: 900;
-    margin-right: 15px;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-.t-amount.income { color: #a2d94c; }
-.t-amount.expense { color: #d9534f; }
-
-.t-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border-left: 1px solid #eee;
-    padding-left: 10px;
-}
-
-.action-icon {
+.action-btn-item {
+    display: block;
+    font-size: 14pt;
     cursor: pointer;
-    font-size: 1rem;
-    filter: grayscale(1);
-    opacity: 0.6;
-    transition: 0.3s;
+    color: #2c3e50;
+    margin: 2px 0;
 }
 
-.action-icon:hover {
-    opacity: 1;
-    filter: grayscale(0);
-}
-
-.green { background-color: var(--green); }
-.red { background-color: var(--red); }
-
-/* Estilos del Modal */
+/* --- MODAL PARA NUEVAS ENTRADAS --- */
 .modal {
-    display: none; 
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
     z-index: 100;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    display: none;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .modal-content {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 350px;
+    background-color: var(--card-dark);
+    border-radius: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 340px;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.input-group {
+.modal-content h3 {
+    font-size: 18pt;
     margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+    text-transform: uppercase;
 }
+
+.input-group { margin-bottom: 12px; }
 
 .input-group label {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    font-weight: bold;
+    display: block;
+    font-size: 11pt;
+    margin-bottom: 4px;
+    color: var(--text-muted);
 }
 
 .input-group input, .input-group select {
-    padding: 10px;
-    border: 1px solid #ddd;
+    width: 100%;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 12px;
     border-radius: 10px;
-    font-size: 1rem;
+    color: var(--text-light);
+    font-family: sans-serif;
 }
 
 .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    text-align: right;
+    margin-top: 15px;
 }
 
-.btn-primario, .btn-secundario {
-    flex: 1;
-    padding: 12px;
+.btn-form {
+    padding: 8px 16px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    font-weight: bold;
+    font-family: 'Boruino', sans-serif;
+    font-size: 12pt;
 }
 
-.input-group-row {
+.btn-form.primary { background-color: var(--purple-solid); color: white; }
+.btn-form.secondary { background-color: transparent; color: white; opacity: 0.6; }
+
+/* --- TÍTULOS DE SECCIÓN --- */
+.row-title {
+    color: #171c26;
+    font-size: 18pt;
+    margin-bottom: 10px;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.02em;
+    font-weight: 100;
+}
+
+/* --- FILA SUPERIOR: GRID LAYOUT --- */
+.dashboard-row {
     display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    font-family: 'Boruino', sans-serif;
+}
+
+.metas-container {
+    width: 40%;
+}
+
+.movimientos-container {
+    width: 60%;
+}
+
+/* --- SECCIÓN: TUS METAS --- */
+.metas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
 
-.input-group-row .input-group {
-    flex: 1;
+.meta-item {
+    background-color: #ffffff;
+    
+    border-radius: 18px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
 }
 
-.btn-primario { background: linear-gradient(135deg, #b0a8fb, #6647ed);; color: white; }
-.btn-secundario { background: #eee; }
+.meta-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-add-meta {
+    background-color: #d1d5d8;
+    cursor: pointer;
+}
+
+.btn-add-meta span {
+    background-color: #000000;
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14pt;
+    font-family: Arial, sans-serif;
+}
+
+/* --- SECCIÓN: TUS MOVIMIENTOS (TARJETA GRÁFICA) --- */
+.grafico-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 38px); /* Ajuste de altura según títulos */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.grafico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grafico-time {
+    color: #777c84;
+    font-size: 13pt;
+}
+
+.icon-download {
+    width: 24px;
+    height: 24px;
+    /* border: 1px solid #ffffff; */
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 11pt;
+    /* line-height: 22px; */
+    margin-left: 10px;
+    color: var(--text-muted);
+    vertical-align: middle;
+    transform: rotate(180deg);
+    color: #777c84;
+}
+
+.icon-arrow {
+    width: 10px;
+    height: 10px;
+}
+
+.grafico-wrapper {
+    margin: 10px 0;
+    flex-grow: 1;
+}
+
+.grafico-wrapper svg {
+    width: 100%;
+    height: 45px;
+    margin-top: -15px;
+}
+
+.grafico-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -9px;
+}
+
+.movimiento-total {
+    font-size: 22pt;
+    color: #000000;
+    line-height: 1;
+}
+
+.badge-tendencia {
+    background-color: #7646ff;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: sans-serif;
+}
+
+.arrow-up {
+    font-family: sans-serif;
+}
+
+/* --- SECCIÓN: NUEVA LISTA DE TRANSACCIONES --- */
+.transacciones-wrapper {
+    margin-top: 10px;
+}
+
+.transaction-list-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.t-ui-card {
+    background-color: #ffffff;
+    border-radius: 22px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.t-ui-left, .t-ui-right {
+    display: flex;
+    align-items: center;
+}
+
+.t-ui-left {
+    gap: 12px;
+}
+
+.t-ui-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f5f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.t-ui-arrow.dynamic-up { color: #8cd947; }
+.t-ui-arrow.dynamic-down { color: #eb5757; }
+
+.t-ui-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f5f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12pt;
+}
+
+.t-ui-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.t-ui-name {
+    font-family: 'Boruino', sans-serif;
+    font-size: 16pt;
+    color: #172437;
+}
+
+.t-ui-date {
+    font-family: Arial, sans-serif;
+    font-size: 9pt;
+    color: #8392a5;
+}
+
+.t-ui-right {
+    gap: 16px;
+}
+
+.t-ui-amount {
+    font-family: 'Boruino', sans-serif;
+    font-size: 22pt;
+}
+
+.t-ui-amount.ui-income { color: #8cd947; }
+.t-ui-amount.ui-expense { color: #eb5757; }
+
+.t-ui-actions-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.t-ui-btn {
+    cursor: pointer;
+    font-size: 12pt;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.t-ui-btn:hover {
+    opacity: 1;
+}
